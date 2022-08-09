@@ -1,0 +1,9 @@
+/*
+    See the JupyterLab Developer Guide for useful CSS Patterns:
+
+    https://jupyterlab.readthedocs.io/en/stable/developer/css.html
+*/
+
+.bookmarked .jp-InputArea-prompt {
+    background: #0058ff1a !important;
+}

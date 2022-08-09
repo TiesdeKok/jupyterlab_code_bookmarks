@@ -1,0 +1,24 @@
+{
+  "jupyter.lab.shortcuts": [
+    {
+        "command": "code_bookmark:toggle",
+        "keys": ["Alt Ctrl K"],
+        "selector": ".jp-Notebook:focus"
+    },
+    {
+        "command": "code_bookmark:next",
+        "keys": ["Alt Ctrl J"],
+        "selector": ".jp-Notebook:focus"
+    },
+    {
+        "command": "code_bookmark:previous",
+        "keys": ["Alt Ctrl L"],
+        "selector": ".jp-Notebook:focus"
+    }
+  ],
+  "title": "jupyterlab_code_bookmarks",
+  "description": "jupyterlab_code_bookmarks settings.",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": false
+}
