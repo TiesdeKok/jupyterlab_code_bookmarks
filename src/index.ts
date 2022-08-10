@@ -12,13 +12,14 @@ import {
 import { ToolbarButton } from '@jupyterlab/apputils';
 import { DocumentRegistry } from '@jupyterlab/docregistry';
 
-import { LabIcon } from '@jupyterlab/ui-components';
-import jumpSvg from '../style/icons/jump.svg';
+//import { LabIcon } from '@jupyterlab/ui-components';
+//import jumpSvg from '../style/icons/jump.svg';
 
 import {
     NotebookPanel,
     INotebookModel,
-    INotebookTracker
+    INotebookTracker,
+    NotebookActions
 } from '@jupyterlab/notebook';
 
 /* -------------------------------------------------------------------------- */
@@ -68,7 +69,13 @@ function jumpToNextBookmark(notebookTracker : INotebookTracker){
                 // Jump to cell
                 notebook.activeCellIndex = index;
                 notebook.activeCell?.editor.focus();
-                notebook.mode = current_mode;
+                notebook.mode = 'edit';
+                if (notebook.activeCell?.model.type == 'markdown') {
+                    notebook.mode = 'command';
+                    NotebookActions.run(notebook);
+                } else {
+                    notebook.mode = current_mode;
+                }
                 break;
             }
         }
@@ -104,11 +111,12 @@ function jumpToPreviousBookmark(notebookTracker : INotebookTracker){
 /*                                    Icons                                   */
 /* -------------------------------------------------------------------------- */
 
+/*
 const jumpIcon = new LabIcon({
     name: 'lsp:jump',
     svgstr: jumpSvg
-    });
-
+});
+*/
 
 /* -------------------------------------------------------------------------- */
 /*                               Register plugin                              */
@@ -228,8 +236,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
                 className: 'bookmark-jump-button-next',
                 label: 'Jump next',
                 onClick: action,
-                tooltip: 'Jump to next bookmark',
-                icon : jumpIcon
+                tooltip: 'Jump to next bookmark'
             });
 
             panel.toolbar.insertItem(10, 'bookmarkJumpNextButton', buttonNext, );
