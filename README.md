@@ -26,7 +26,7 @@ A JupyterLab extension that adds code bookmark functionality, similar to the <a 
 
 <h2 id="introduction">Introduction</h2>
  
-GIF will be added soon. 
+![code_bookmarks_demo_v1](https://user-images.githubusercontent.com/13317782/183809039-0203aec0-ff1d-4916-8642-f58cb5c785ad.gif)
 
 <h2 id="installation">Installation</h2>
 
