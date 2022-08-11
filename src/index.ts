@@ -19,7 +19,8 @@ import {
     NotebookPanel,
     INotebookModel,
     INotebookTracker,
-    NotebookActions
+    NotebookActions,
+    Notebook,
 } from '@jupyterlab/notebook';
 
 /* -------------------------------------------------------------------------- */
@@ -52,10 +53,24 @@ function toggleBookmark(notebookTracker : INotebookTracker){
 
 /* -------------------------- Next/previous functionality -------------------- */
 
+function jump_to_cell(notebook : Notebook, index : number){
+    let current_mode = notebook.mode;
+    // Jump to cell
+    notebook.activeCellIndex = index;
+    notebook.activeCell?.editor.focus();
+    notebook.mode = 'edit';
+    if (notebook.activeCell?.model.type == 'markdown') {
+        notebook.mode = 'command';
+        NotebookActions.run(notebook);
+    } else {
+        notebook.mode = current_mode;
+    }
+}
+
+
 function jumpToNextBookmark(notebookTracker : INotebookTracker){
     if (VERBOSE > 0){console.log('Jump to next bookmark - pressed');}
     var notebook = notebookTracker.currentWidget!.content;
-    const current_mode = notebook.mode;
     
     // Get current cell index
     const current_index = notebook.activeCellIndex;
@@ -66,16 +81,7 @@ function jumpToNextBookmark(notebookTracker : INotebookTracker){
             // Get cell index
             const index = notebook.widgets.indexOf(cell);
             if (index > current_index) {
-                // Jump to cell
-                notebook.activeCellIndex = index;
-                notebook.activeCell?.editor.focus();
-                notebook.mode = 'edit';
-                if (notebook.activeCell?.model.type == 'markdown') {
-                    notebook.mode = 'command';
-                    NotebookActions.run(notebook);
-                } else {
-                    notebook.mode = current_mode;
-                }
+                jump_to_cell(notebook, index);
                 break;
             }
         }
@@ -85,7 +91,6 @@ function jumpToNextBookmark(notebookTracker : INotebookTracker){
 function jumpToPreviousBookmark(notebookTracker : INotebookTracker){
     if (VERBOSE > 0){console.log('Jump to previous bookmark - pressed');}
     var notebook = notebookTracker.currentWidget!.content;
-    const current_mode = notebook.mode;
     
     // Get current cell index
     const current_index = notebook.activeCellIndex;
@@ -97,10 +102,7 @@ function jumpToPreviousBookmark(notebookTracker : INotebookTracker){
             // Get cell index
             const index = notebook.widgets.indexOf(cell);
             if (index < current_index) {
-                // Jump to cell
-                notebook.activeCellIndex = index;
-                notebook.activeCell?.editor.focus();
-                notebook.mode = current_mode;
+                jump_to_cell(notebook, index);
                 break;
             }
         }

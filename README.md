@@ -67,8 +67,8 @@ If you have questions or experience problems please use the `issues` tab of this
 <h2 id="in-progress">Known bugs and features in progress</h2>
 
 - [ ] Copy and pasting a cell works, however, bookmark styling is not applied until webpage refresh.   
-- [ ] Jumping to a markdown cells does not always move the cell into view.
-- [ ] Enable the customization of the cell bookmark color.    
+- [x] Jumping to a markdown cells does not always move the cell into view.
+- [ ] Enable customization of the cell bookmark color.    
 - [ ] Make toolbar jump icons take up less space using icons.   
 - [ ] Add basic tests.   
 
